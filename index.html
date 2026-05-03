@@ -53,12 +53,13 @@
             }
         }
     </script>
-    <script async src="https://docs.opencv.org/4.10.0/opencv.js" onload="onOpenCvReady();"></script>
+    <!-- 关键修复：使用 onload 回调确保 OpenCV 先就绪 -->
+    <script src="https://docs.opencv.org/4.10.0/opencv.js" onload="onOpenCvReady()"></script>
     <script type="module">
         import * as THREE from 'three';
         import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-        // ---------- 配置（如果你的文件名不同，修改这里）----------
+        // ---------- 配置（文件路径）----------
         const REF_IMAGE_URL = './logo.jpg';
         const MODEL_URL = './cartoon.glb';
         
@@ -71,6 +72,7 @@
         
         const statusDiv = document.getElementById('status');
         
+        // 全局函数，供 opencv.js 加载完成后调用
         window.onOpenCvReady = function() {
             cvReady = true;
             statusDiv.innerText = '✅ OpenCV就绪，加载参考图...';
